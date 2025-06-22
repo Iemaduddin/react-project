@@ -1,4 +1,4 @@
-const WeatherCard = ({ data }) => {
+const WeatherCardOpenMap = ({ data }) => {
   return (
     <div className="max-w-sm mx-auto bg-gradient-to-br from-blue-400 to-purple-600 text-white p-6 rounded-xl shadow-md">
       <h2 className="text-2xl font-bold mb-2 text-center">
@@ -31,4 +31,4 @@ const WeatherCard = ({ data }) => {
   );
 };
 
-export default WeatherCard;
+export default WeatherCardOpenMap;
