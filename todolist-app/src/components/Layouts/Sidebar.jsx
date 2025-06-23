@@ -34,11 +34,11 @@ const Sidebar = ({ isOpen, onClose }) => {
         <li className="relative group">
           <Link to={"/dashboard/to-do-lists"} className={linkClass("/dashboard/to-do-lists")} onClick={() => isMobile && onClose()}>
             <Icon icon="mdi:list-box-outline" width="20" />
-            {isOpen && <span>Todo Lists</span>}
+            {isOpen && <span>Kanban Board</span>}
           </Link>
           {!isOpen && (
             <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-gray-800 text-white text-xs font-medium px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap">
-              Todo Lists
+              Kanban Board
             </div>
           )}
         </li>

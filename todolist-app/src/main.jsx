@@ -9,6 +9,7 @@ import ErrorPage from "./components/Pages/403.jsx";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 import DashboardPage from "./components/Pages/dashboard.jsx";
 import ToDoListsPage from "./components/Pages/todolists.jsx";
+import Kanban from "./components/Pages/kanban.jsx";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <ToDoListsPage />,
+        element: <Kanban />,
       },
     ],
   },
