@@ -8,7 +8,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-
+app.use(authRoutes);
 // Route
 app.get("/", (_, res) => {
   res.send("CMS Backend is running");

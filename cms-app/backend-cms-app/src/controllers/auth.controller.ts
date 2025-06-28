@@ -16,13 +16,13 @@ export const register = async (req: Request, res: Response, next: NextFunction):
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    const roleIdValue = roleId || 5;
     const user = await prisma.user.create({
       data: {
         name,
         email,
         password: hashedPassword,
-        roleId,
+        roleId: roleIdValue,
       },
     });
 
@@ -81,9 +81,7 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
   }
 };
 
-export const logout = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  res.clearCookie("token");
-
+export const logout = async (req: Request, res: Response): Promise<void> => {
   res.status(200).json({
     message: "Anda telah berhasil logout",
   });
