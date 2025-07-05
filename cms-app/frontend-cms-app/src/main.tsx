@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
+import "./App.css";
 
 import ProtectedRoute from "./routes/ProtectedRoute.tsx";
 import LoginPage from "./components/Pages/login.tsx";
@@ -9,6 +9,7 @@ import DashboardPage from "./components/Pages/dashboard.tsx";
 import ErrorPage from "./components/Pages/403.tsx";
 import UsersManagementPage from "./components/Pages/users-management.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Toaster } from "@/components/ui/sonner";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,9 @@ if (!rootElement) throw new Error("Failed to find the root element");
 
 createRoot(rootElement).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <>
+      <RouterProvider router={router} />
+      <Toaster />
+    </>
   </StrictMode>
 );

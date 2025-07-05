@@ -4,13 +4,30 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 
 const DashboardPage = () => {
   const users = JSON.parse(localStorage.getItem("users") || "[]");
-  const totalUsers = users.length;
+
   const user = JSON.parse(localStorage.getItem("user") || "null") as { name?: string } | null;
   const authName = user?.name || "Guest";
   const [pending, setPending] = useState(true);
   const [error, setError] = useState("");
+  const [totalUsers, setTotalUsers] = useState(0);
   const [totalNews, setTotalNews] = useState(0);
   const [totalAlbums, setTotalAlbums] = useState(0);
+  useEffect(() => {
+    fetch("http://localhost:5000/users")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Gagal Mengambil Data");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setTotalUsers(data.data.length);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setPending(false);
+      });
+  }, []);
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((res) => {
