@@ -10,6 +10,7 @@ export const users = async (req: Request, res: Response, next: NextFunction): Pr
         email: true,
         role: {
           select: {
+            id: true,
             name: true,
           },
         },
@@ -46,19 +47,25 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
         password: hashedPassword,
         roleId: roleIdValue,
       },
+      include: {
+        role: true,
+      },
     });
     res.status(201).json({
-      message: "Register akun berhasil",
+      message: "Menambahkan akun berhasil",
       user: {
         id: user.id,
         name: user.name,
         email: user.email,
+        role: {
+          name: user.role.name,
+        },
       },
     });
   } catch (err) {
     console.error("Register error:", err);
     res.status(500).json({
-      error: "Register akun gagal!",
+      error: "Menambahkan akun gagal!",
     });
   }
 };
@@ -82,6 +89,9 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
         password: hashedPassword,
         roleId: roleIdValue,
       },
+      include: {
+        role: true,
+      },
     });
     res.status(200).json({
       message: "Berhasil mengupdate data user",
@@ -89,6 +99,10 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
         id: user.id,
         name: user.name,
         email: user.email,
+        role: {
+          id: user.role.id,
+          name: user.role.name,
+        },
       },
     });
   } catch (err) {

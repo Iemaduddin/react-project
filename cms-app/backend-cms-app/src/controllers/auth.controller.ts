@@ -52,13 +52,13 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
     });
 
     if (!user) {
-      res.status(404).json({ message: "Email tidak ditemukan!" });
+      res.status(404).json({ message: "Email atau Password salah!" });
       return;
     }
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      res.status(401).json({ message: "Password Salah!" });
+      res.status(401).json({ message: "Email atau Password salah!" });
       return;
     }
 
