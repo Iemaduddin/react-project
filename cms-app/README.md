@@ -45,3 +45,24 @@ Terdapat 5 role utama dalam sistem ini:
 ### 5. ⚪ Member
 
 - Hanya dapat membaca konten (read-only)
+
+---
+
+### 📝 Tampilan Dashboard
+
+#### Dashboard
+
+![Dashboard](img/dashboard1.png)
+![Dashboard](img/dashboard2.png)
+
+#### Posts Management
+
+![Posts Management](img/posts.png)
+
+#### Home
+
+![Home](img/landingpage.png)
+
+#### Detail Post
+
+![Home](img/detail-post.png)
