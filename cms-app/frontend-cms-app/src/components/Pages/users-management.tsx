@@ -15,6 +15,7 @@ import { Button } from "../ui/button";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Input } from "../ui/input";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { baseUrl } from "@/main";
 
 type User = {
   id: number;
@@ -47,6 +48,7 @@ const UsersManagementPage = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const urlBase = baseUrl;
 
   const formEdit = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
@@ -74,7 +76,7 @@ const UsersManagementPage = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:5000/users")
+    fetch(`${urlBase}/users`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Gagal Mengambil Data");
@@ -96,7 +98,7 @@ const UsersManagementPage = () => {
   const onSubmitUpdate = async (data: FormSchemaType) => {
     setPending(true);
     try {
-      const res = await fetch(`http://localhost:5000/users/update/${data.id}`, {
+      const res = await fetch(`${urlBase}/users/update/${data.id}`, {
         method: "put",
         headers: {
           "Content-Type": "application/json",
@@ -134,7 +136,7 @@ const UsersManagementPage = () => {
   }, [search, users]);
   const handleDelete = async (id: number) => {
     try {
-      const res = await fetch(`http://localhost:5000/users/delete/${id}`, {
+      const res = await fetch(`${urlBase}/users/delete/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Gagal menghapus user");
@@ -188,30 +190,26 @@ const UsersManagementPage = () => {
       name: "Aksi",
       cell: (row) => (
         <div className="flex gap-2">
-          {row.role.id !== 1 && (
-            <>
-              <Button onClick={() => handleEdit(row)}>
-                <Icon icon="mdi:pencil" />
+          <Button onClick={() => handleEdit(row)}>
+            <Icon icon="mdi:pencil" />
+          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive">
+                <Icon icon="mdi:trash-can" />
               </Button>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="destructive">
-                    <Icon icon="mdi:trash-can" />
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Apakah Anda yakin akan menghapus user ini?</AlertDialogTitle>
-                    <AlertDialogDescription>Tindakan ini tidak dapat dibatalkan. Tindakan ini akan menghapus akun Anda secara permanen dan menghapus data Anda dari server.</AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => handleDelete(row.id)}>Continue</AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </>
-          )}
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Apakah Anda yakin akan menghapus user ini?</AlertDialogTitle>
+                <AlertDialogDescription>Tindakan ini tidak dapat dibatalkan. Tindakan ini akan menghapus akun Anda secara permanen dan menghapus data Anda dari server.</AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={() => handleDelete(row.id)}>Continue</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       ),
     },
@@ -230,7 +228,7 @@ const UsersManagementPage = () => {
   const onSubmitStore = async (data: FormSchemaType) => {
     setPending(true);
     try {
-      const res = await fetch("http://localhost:5000/users/store", {
+      const res = await fetch(`${urlBase}/users/store`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
