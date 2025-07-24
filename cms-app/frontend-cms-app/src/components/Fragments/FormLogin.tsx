@@ -2,6 +2,7 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import InputForm from "../Elements/Input";
 import Button from "../Elements/Button";
+import { baseUrl } from "@/main";
 
 type LoginResponse = {
   token: string;
@@ -9,7 +10,7 @@ type LoginResponse = {
     id: number;
     name: string;
     email: string;
-    role: number;
+    role: string;
   };
 };
 const FormLogin = () => {
@@ -24,9 +25,10 @@ const FormLogin = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
+    const urlBase = baseUrl;
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
+      const res = await fetch(`${urlBase}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,8 +45,12 @@ const FormLogin = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       localStorage.setItem("isLoggedIn", "true");
-
-      navigate("/dashboard");
+      const roleUser = data.user.role;
+      if (roleUser != "member") {
+        navigate("/dashboard");
+      } else {
+        navigate("/");
+      }
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError(error.message);

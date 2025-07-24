@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import InputForm from "../Elements/Input";
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import Button from "../Elements/Button";
+import { baseUrl } from "@/main";
 
 type RegisterForm = {
   name: string;
@@ -25,8 +26,10 @@ const FormRegister = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
+    const urlBase = baseUrl;
+
     try {
-      const res = await fetch("http://localhost:5000/api/auth/register", {
+      const res = await fetch(`${urlBase}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
