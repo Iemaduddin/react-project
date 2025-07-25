@@ -20,6 +20,7 @@ const DashboardPage = () => {
       })
       .then((data) => {
         setTotalTodos(data.length);
+        setPending(false);
       })
       .catch((error) => {
         setError(error.message);
@@ -37,7 +38,7 @@ const DashboardPage = () => {
       ) : (
         <div className="grid grid-cols-3 gap-4">
           <CardTotal title="Total Users" total={totalUsers} bg="bg-gradient-to-r from-blue-800 to-blue-400" fontcolor="text-white" />
-          <CardTotal title="Total News" total={totalTodos} bg="bg-gradient-to-r from-red-800 to-red-500" fontcolor="text-white" />
+          <CardTotal title="Total Todo" total={totalTodos} bg="bg-gradient-to-r from-red-800 to-red-500" fontcolor="text-white" />
         </div>
       )}
     </DashboardLayout>
